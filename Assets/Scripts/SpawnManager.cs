@@ -31,6 +31,6 @@ public class SpawnManager : MonoBehaviour
     void SpawnRandomObstacle1()
     {
         int obstacleIndex = Random.Range(0, obstaclePrefab1.Length);
-        Instantiate(obstaclePrefab1[obstacleIndex], new Vector3(4, Random.Range(-1.4f, 3.2f), 0), obstaclePrefab1[obstacleIndex].transform.rotation);
+        Instantiate(obstaclePrefab1[obstacleIndex], new Vector3(4, Random.Range(-0.6f, 3.2f), 0), obstaclePrefab1[obstacleIndex].transform.rotation);
     }
 }
