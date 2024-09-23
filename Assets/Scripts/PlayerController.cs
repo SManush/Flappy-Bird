@@ -7,6 +7,9 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D playerRb;
+    private AudioSource playerAudio;
+    public AudioClip scoreSound;
+    public AudioClip crushSound;
     public float jumpForce;
     public float gravityModifier;
     public bool isLowEnough;
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         Physics.gravity *= gravityModifier;
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour
             gameOver = true;
             Time.timeScale = 0f;
             gameOverText.SetActive(true);
+            playerAudio.PlayOneShot(crushSound, 1.0f);
             Debug.Log("Game Over!");
         }
     }
@@ -49,6 +54,7 @@ public class PlayerController : MonoBehaviour
             {
                 score += 1;
                 scoreText.text = score.ToString();
+                playerAudio.PlayOneShot(scoreSound, 1.0f);
                 Debug.Log("Score: " + score);
 
                 // ��������� ����� ���������� ��������

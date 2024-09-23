@@ -19,7 +19,11 @@ public class MoveLeft : MonoBehaviour
         transform.Translate(Vector3.left * Time.deltaTime * (speed * 2));
        
         if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
-        if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle") && gameObject.CompareTag("Score"))
+        {
+            Destroy(gameObject);
+
+        }
+        else if (transform.position.x < leftBound && gameObject.CompareTag("Score"))
         {
             Destroy(gameObject);
         }
