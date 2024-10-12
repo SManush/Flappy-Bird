@@ -10,15 +10,15 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D playerRb;
     private AudioSource playerAudio;
+    //public ParticleSystem exposionPatrical;
     public AudioClip scoreSound;
     public AudioClip crushSound;
     public float jumpForce;
     public float gravityModifier;
-    public bool isLowEnough;
     public bool gameOver = false;
     public int score;
     public TMP_Text scoreText;
-    private float debounceTime = 1.0f; // ����� �������� � ��������
+    private float debounceTime = 1.0f; // waiting time in seconds
     private float lastTriggerTime = 0f;
     public GameObject gameOverText;
     private ScoreManager scoreManager;
@@ -39,11 +39,11 @@ public class PlayerController : MonoBehaviour
         Physics.gravity *= gravityModifier;
         playerAudio = GetComponent<AudioSource>();
         scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
-        scoreManager = FindObjectOfType<ScoreManager>();
         SaveScore();
         Debug.Log(Application.persistentDataPath);
         LoadScore();
         UpdateScoreUI();
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Score"))
         {
-            // ���������, ������ �� ���������� ������� � ���������� ��������
+            // Check if enough time has passed since the last trigger
             if (Time.time - lastTriggerTime >= debounceTime)
             {
                 score += 1;
@@ -91,11 +91,12 @@ public class PlayerController : MonoBehaviour
                 playerAudio.PlayOneShot(scoreSound, 1.0f);
                 Debug.Log("Score: " + score);
 
-                // ��������� ����� ���������� ��������
+                // Update last trigger time
                 lastTriggerTime = Time.time;
             }
         }
     }
+
     [System.Serializable]
     class SaveData
     {
